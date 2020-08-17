@@ -1,0 +1,7 @@
+build
+node_modules
+cfg/conifg.json
+src/vk
+.env
+.vscode
+yarn-error.log
