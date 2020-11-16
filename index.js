@@ -1,6 +1,14 @@
 require("dotenv").config()
 const { AkairoClient, CommandHandler, ListenerHandler } = require("discord-akairo")
 
+global.mongoose = require('mongoose')
+global.UserModels = require("./src/mongo/User")
+global.WarnModels = require('./src/mongo/Warn')
+mongoose.connect('mongodb://localhost/starrevenge', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connection.on('connected',()=>{
+  console.log('[✅ DataBase] Connected!')
+})
+
 class StarRevenge extends AkairoClient {
     constructor() {
         super({
@@ -30,20 +38,20 @@ client.start(process.env.TOKEN)
 // VK
 
 // const { Handler } = require("./src/vk/modules/handler");
-// 
+
 // const config = require("./src/vk/config.json");
-// 
+
 // const { clusters } = config;
-// 
+
 // console.log("[VK2DISCORD] Запущен.");
-// 
+
 // clusters.forEach((cluster, index) => {
-    // const handler = new Handler();
-// 
-    // handler.setCluster({
-        // ...cluster,
-        // index: index + 1
-    // });
-// 
-    // handler.init();
+//     const handler = new Handler();
+
+//     handler.setCluster({
+//         ...cluster,
+//         index: index + 1
+//     });
+
+//     handler.init();
 // });

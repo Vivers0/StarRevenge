@@ -8,7 +8,7 @@ class Raedy extends Listener {
             emitter: 'client'
         })
 
-        this.acivities_list = ["The Star Revenge", "discord.gg/qhAq3x8"];
+        this.acivities_list = ["vk.com/starrevenge", "discord.gg/qhAq3x8", "!server"];
     }
 
     exec() {

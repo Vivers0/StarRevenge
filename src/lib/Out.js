@@ -17,9 +17,8 @@ class Out extends Command {
         } catch(e) {
             console.log(e)
         }
-        message.channel.bulkDelete(1);
-        message.channel.send(new MessageEmbed().setDescription(`<@${message.author.id}> Успешно! С вас сняты все роли!`).setColor("#FFA500").setFooter("The Star Revenge").setTimestamp()).then(msg => msg.delete({ timeout: 10000 }));
-        this.client.channels.cache.find(c => c.id === process.env.SET).send(new MessageEmbed().setDescription(`С <@${message.author.id}> сняты все роли!`).setColor("#FFA500").setFooter("The Star Revenge").setTimestamp());
+        message.channel.send(new MessageEmbed().setDescription(`REMOVAL | Снятие, <@${message.author.id}> Успешно! С вас сняты все роли!`).setColor("#FFA500").setFooter("The Star Revenge").setTimestamp()).then(msg => msg.delete({ timeout: 10000 }));
+        this.client.channels.cache.find(c => c.id === process.env.GET).send(new MessageEmbed().setDescription(`REMOVAL | Снятие, С <@${message.author.id}> сняты все роли!`).setColor("#FFA500").setFooter("The Star Revenge").setTimestamp());
     }
 }
 

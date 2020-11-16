@@ -10,10 +10,14 @@
   "author": "vivers",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.20.0",
     "discord-akairo": "^8.0.0",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
+    "jsdom": "^16.4.0",
+    "mongoose": "^5.10.14",
+    "ms": "^2.1.2",
     "vk-io": "^4.0.0-rc.30",
     "webhook-discord": "^3.7.5"
   }

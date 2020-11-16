@@ -4,7 +4,7 @@ const { Command } = require("discord-akairo")
 const { MessageEmbed } = require("discord.js")
 const { JSDOM } = jsdom;
 
-class Parser extends Command{
+class Parser extends Command {
     constructor(message) {
         super('parser', {
             aliases: ["server"],
@@ -31,7 +31,7 @@ class Parser extends Command{
                 .setFooter("© «STAR WARS™: The Star Revenge». 2020 год.", "https://i.imgur.com/K2EEwXo.png")
                 .setColor("BLUE")
 
-            message.channel.send(embed)
+            message.channel.send(embed).then(msg => msg.delete({ timeout: 10000 }))
         })
     }
 
