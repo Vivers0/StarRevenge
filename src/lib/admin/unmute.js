@@ -10,7 +10,7 @@ class Unmute extends Command {
     }
 
     async exec(message) {
-        let rUser = message.guild.member(message.mentions.users.first());
+        let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]));
         let role = message.guild.roles.cache.find(r => r.id === process.env.MUTEROLE);
     
         rUser.roles.remove(role).then(() => {

@@ -14,9 +14,7 @@ class Kick extends Command {
         if (!message.member.permissions.has('KICK_MEMBERS')) return message.channel.send('Недостаточно прав!')
         if (!message.guild.me.hasPermission('KICK_MEMBERS')) return message.channel.send('Недостаточно прав!')
 
-        const user = message.mentions.users.first()
-        if (!user) return message.channel.send('Вы не указали участника!')
-        const member = message.guild.member(user)
+        const member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]))
 
         if (member) {
             if (member.id === message.author.id) return message.channel.send('Вы не можете забанить самого себя!')
