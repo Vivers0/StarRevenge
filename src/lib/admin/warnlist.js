@@ -1,6 +1,5 @@
 const { Command } = require("discord-akairo")
 const { MessageEmbed } = require("discord.js")
-const ms = require("ms")
 
 class WarnList extends Command {
     constructor() {
@@ -11,11 +10,13 @@ class WarnList extends Command {
     }
 
     async exec(message) {
-      if (!message.guild.me.hasPermission('BAN_MEMBERS')) return message.channel.send('Недостаточно прав!')
-      if (!message.member.permissions.has('BAN_MEMBERS')) return message.channel.send('Недостаточно прав!')
+      const [_, ...args] = message.content.slice("!".length).split(/ +/)
+        const member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]))
+        if (!member) return message.channel.send('Вы не указали участника!')
 
-      const member = message.guild.member(message.mentions.users.first())
-      if (!member) return message.channel.send('Вы не указали участника!')
+        if (!message.guild.me.hasPermission('BAN_MEMBERS')) return message.channel.send('Недостаточно прав!')
+        if (!message.member.permissions.has('BAN_MEMBERS')) return message.channel.send('Недостаточно прав!')
+
       if(member.user.bot) return message.reply(`Боты не по моей части`)
       
       WarnModels.find({ userID: member.id }).exec((err, res) => {

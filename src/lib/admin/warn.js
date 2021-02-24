@@ -12,14 +12,16 @@ class Warn extends Command {
 
     async exec(message) {
         const [_, ...args] = message.content.slice("!".length).split(/ +/)
-        const member = message.guild.member(message.mentions.users.first())
-        let reason = args[1];
-        if(!reason) reason = 'Отсуствует'
 
-        if(!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send(`У вас нету прав!`)
+        if (!message.guild.me.hasPermission('BAN_MEMBERS')) return message.channel.send('Недостаточно прав!')
+        if (!message.member.permissions.has('BAN_MEMBERS')) return message.channel.send('Недостаточно прав!')
+
+        const member = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]))
         if(!member) return message.reply(`Пользователь не найден.`)
 
-        if(member.user.id == message.author.id) return message.reply(`Вы не можете предупредить самого себя`)
+        let reason = args[1] || 'Отсуствует';
+
+        if(member.user.id === message.author.id) return message.reply(`Вы не можете предупредить самого себя`)
         if(member.user.bot) return message.reply(`Боты не по моей части`)
 
         let user_db = await UserModels.findOne({ userID: member.id });
@@ -35,7 +37,6 @@ class Warn extends Command {
         member.send(msg)
         this.client.channels.cache.get(process.env.GET).send(msg)
         message.channel.send(msg)
-        console.log(this.aid)
             
         WarnModels.create({
             warnID: this.getRandomInt(1, 99999),

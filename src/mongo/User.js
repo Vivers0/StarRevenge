@@ -1,5 +1,5 @@
 const schema = mongoose.Schema({
-    userID: Number,
+    userID: String,
     warn: { type: Number, default: 0 },
 });
 

@@ -16,8 +16,7 @@ class GuildMemberAdd extends Listener {
     }
 
     async createUserModels(member) {
-        await UserModels.findOne({ userID: member.id })
-        console.log(member.id)
+        let user = await UserModels.findOne({ userID: member.id })
         if (!user) {
             await UserModels.create({ userID: member.id }).then(m => m.save())
         } else return;

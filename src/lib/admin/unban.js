@@ -10,12 +10,12 @@ class Unban extends Command {
     }
 
     async exec(message) {
-        const [_, ...args] = message.content.slice("!".length).split(/ +/)
+        const args = message.content.slice("!".length).split(/ +/)
         if (!message.member.hasPermission('BAN_MEMBERS')) return message.channel.send("Ошибка! У вас нет прав!");
-        if (!args[0]) return message.channel.send('Участник не найден!');
+        if (!args[1]) return message.channel.send('Участник не найден!');
 
     message.guild.members
-    .unban(args[0])
+    .unban(args[1])
     .then(() => {
         let msg = new MessageEmbed()
         .setDescription(`<@${args[0]}> был успешно разбанен! (Модератор: <@${message.author.id}>)`)

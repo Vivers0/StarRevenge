@@ -1,8 +1,0 @@
-build
-node_modules
-cfg/conifg.json
-src/vk
-.env
-.vscode
-.idea
-yarn-error.log

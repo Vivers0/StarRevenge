@@ -25,6 +25,7 @@ class Unwarn extends Command {
 
         await WarnModels.findOne({ warnID: args[0] }).exec((err, res) => {
             if (!res) {
+                // let rUser = message.guild.member(message.guild.members.cache.get(args[0])) 
                 return message.channel.send('Предупреждения с таким ID не найдено!')
             } else {
                 this.aid = res

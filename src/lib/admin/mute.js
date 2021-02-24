@@ -11,14 +11,14 @@ class Mute extends Command {
     }
 
     async exec(message) {
-        const [_, ...args] = message.content.slice("!".length).split(/ +/)
+        const args = message.content.slice("!".length).split(/ +/)
         if (!message.guild.me.hasPermission('KICK_MEMBERS')) return message.channel.send('Недостаточно прав!')
         if (!message.member.permissions.has('KICK_MEMBERS')) return message.channel.send('Недостаточно прав!')
 
-        const rUser = message.mentions.members.first() || message.guild.members.cache.get(args[0])
+        const rUser = message.mentions.members.first() || await message.guild.members.fetch(args[1])
         if (rUser) {
-            const reason = args[2]
-            const muteTime = ms(args[1])
+            const reason = args[3]
+            const muteTime = ms(args[2])
             if (isNaN(muteTime) || !muteTime) return message.channel.send('Вы ввели время не в том формате')
 
             if (rUser.id === message.author.id) return message.channel.send('Вы не можете забанить самого себя!')

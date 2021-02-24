@@ -22,6 +22,11 @@ class Raedy extends Listener {
             this.client.user.setActivity(this.acivities_list[index], { type: "WATCHING" });
           }, 7000);
     }
+
+    // antiSpam() {
+    //     let usersList = {}
+
+    // }
 }
 
 module.exports = Raedy

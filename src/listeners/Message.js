@@ -7,11 +7,11 @@ class Message extends Listener {
             event: 'message',
             emitter: 'client'
         })
-
+        this.aid = new Number()
        
     }
 
-    exec(message) {
+    async exec(message) {
         this.deleteMessageInGetChannel(this.client, message)
         this.createUserModels(message)
     }
@@ -22,11 +22,16 @@ class Message extends Listener {
     }
 
     async createUserModels(message) {
+        this.aid = message.author.id
         if (message.author.bot) return;
-        let user = await UserModels.findOne({ userID: message.author.id });
-        if(!user) {
-            UserModels.create({ userID: message.author.id })
-         } else return;
+        await UserModels.findOne({ userID: message.author.id }, (err, user) => {
+            if (err) console.error(err);
+            
+            if(!user) {
+                const newUser = new UserModels({ userID: this.aid, })
+                return newUser.save()
+            }
+        });
     }
 }
 
