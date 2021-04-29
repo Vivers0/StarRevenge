@@ -3,7 +3,7 @@ const { MessageEmbed } = require("discord.js")
 const { query } = require('gamedig')
 
 class Parser extends Command {
-    constructor(message) {
+    constructor() {
         super('parser', {
             aliases: ["server"],
             category: "client"
