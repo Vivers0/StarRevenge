@@ -25,6 +25,7 @@ class Sender extends Message {
                 .setFooter('https://vk.com/starrevenge')
                 .setTimestamp()
                 .setColor(color.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/m) ? color : "#aabbcc")
+                .setURL("https://twitter.com")
         ];
     }
 
@@ -40,21 +41,21 @@ class Sender extends Message {
 
             if (
                 (longpoll && filter && payload.owner_id !== payload.from_id) || // Фильтр на записи "Только от имени группы" для LongPoll API
-                (!ads && payload.marked_as_ads)/* ||
-                (!donut && payload.donut.is_donut)*/
+                (!ads && payload.marked_as_ads) ||
+                (!donut && payload.donut.is_donut)
             ) {
                 return console.log(`[!] Новая запись в кластере #${this.config.index} не соответствуют настройкам конфига, пропустим ее.`);
             }
 
             await this.parseText(payload);
 
-            return this.send(payload);
+            return this.send(payload.date);
         } else {
             console.log(`[!] Новых записей в кластере #${this.config.index} нет или они не соответствуют ключевым словам!`);
         }
     }
 
-    async send({ date, owner_id, id }) {
+    async send(date) {
         const { post, repost } = this.message;
         const { webhook_urls, content, username, avatar_url: avatarURL } = this.config.discord;
         const builders = this.builders;
@@ -64,7 +65,7 @@ class Sender extends Message {
         const message = new Markdown(post + repost)
             .sliceFix();
 
-        builder.setDescription(`[**Открыть пост**](https://vk.com/starrevenge?w=wall${owner_id}_${id})\n\n${message}`);
+        builder.setDescription(message);
 
         this.pushDate(date); // Сохраняем дату поста, чтобы не публиковать его заново
 

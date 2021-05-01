@@ -1,16 +1,12 @@
 {
   "name": "starrevenge",
-  "version": "1.2.0",
-  "description": "Discord bot for StarRevenge project",
+  "version": "1.3.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
-  "author": "Vivers0 [vivers.savva@gmail.com]",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Vivers0/StarRevenge"
-  },
+  "author": "vivers",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.20.0",
@@ -23,7 +19,7 @@
     "mongoose": "^5.10.14",
     "ms": "^2.1.2",
     "string-replace-async": "^2.0.0",
-    "vk-io": "^4.1.4",
+    "vk-io": "^4.0.4",
     "webhook-discord": "^3.7.5"
   }
 }
