@@ -1,4 +1,5 @@
 const { Command } = require("discord-akairo")
+const { MessageEmbed } = require("discord.js")
 
 class Clear extends Command {
     constructor() {
@@ -13,15 +14,37 @@ class Clear extends Command {
         if (!message.guild.me.hasPermission('MANAGE_MESSAGES')) return message.channel.send('Недостаточно прав!')
         if (!message.member.permissions.has('MANAGE_MESSAGES')) return message.channel.send('Недостаточно прав!')
 
-        if (isNaN(args[0]) || parseInt(args[0]) <= 0) return message.channel.send('Вы ввели не число.').then(m => m.delete({ timeout: 10000 }))
-        let deleteNum
-        if (parseInt(args[0]) > 100) {
-          deleteNum = 100
-        } else {
-          deleteNum = parseInt(args[0])
-        }
+        
+        const user = message.mentions.users.first()
+        const amount = parseInt(args[0])
 
-        message.channel.bulkDelete(deleteNum)
+        let embed = new MessageEmbed()
+            .setColor('GREEN')
+            .addField(`Удалено:`, `**${amount}** сообщений;`)
+        await message.channel.messages
+            .fetch({
+                limit: 100,
+            })
+            .then((messages, messageToDelete) => {
+                messageToDelete = messages.array().slice(0, amount)
+                if (message.content.includes('--bots')) {
+                    messageToDelete = messages
+                        .filter((m) => m.author.bot === true)
+                        .array()
+                        .slice(0, amount);
+                    embed.addField(`Фильтр пользователя:`, 'Только боты')
+                }
+                if (user) {
+                    const filterBy = user ? user.id : bot.user.id
+                    messageToDelete = messages
+                        .filter((m) => m.author.id === filterBy)
+                        .array()
+                        .slice(0, amount);
+                    embed.addField(`Фильтр пользователя:`, user.tag)
+                }
+                message.channel.bulkDelete(messageToDelete).catch((error) => console.log(error.stack))
+            })
+        await message.channel.send(embed)
     }
 }
 

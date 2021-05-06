@@ -11,17 +11,8 @@ class Warn extends Command {
     }
 
     async exec(message) {
-        const [_, ...args] = message.content.slice("!".length).split(/ +/)
-        const roles = ['838112472766218270'];
-        let cache = 0
-        message.member.roles.cache.array().map(el => {
-            roles.map(e => {
-                if (e === el.id) {
-                    cache++
-                }
-            })
-        })
-        if (cache === 0) return message.channel.send('Недостаточно прав!')
+        const [_, ...args] = message.content.slice("!".length).split(/ +/)        
+        if (this.permissions(message) === true) return message.reply('Недостаточно прав!')
 
         if (!message.guild.me.hasPermission('BAN_MEMBERS')) return message.channel.send('Недостаточно прав!')
 
@@ -68,6 +59,20 @@ class Warn extends Command {
         min = Math.ceil(min);
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    permissions (message) {
+        const roles = ['641325497753534484', '773859511588225034', '672063251537723412', '704235358304337970',
+        '672059478568599573', '672063138505555988', '641916470745497601', '719311800125882382', '694848466077089914'];
+        let cache = 0
+        message.member.roles.cache.array().map(el => {
+            roles.map(e => {
+                if (e === el.id) {
+                    cache++
+                }
+            })
+        })
+        return cache === 0
     }
 }
 
