@@ -21,5 +21,8 @@
     "string-replace-async": "^2.0.0",
     "vk-io": "^4.0.4",
     "webhook-discord": "^3.7.5"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }
